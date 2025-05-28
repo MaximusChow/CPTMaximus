@@ -14,8 +14,8 @@ public class CPTMax{
 		for(intCount = 1; intCount <= intLength; intCount++){
 			con.print("_ ");
 		}
-		con.println();
-		con.println("You have "+intLength+" points.");
+		
+		con.println("/n/n You have "+intLength+" points.");
 		con.println("Guess a letter");
 		chrLetter = con.readChar();
 		
