@@ -3,15 +3,29 @@ import arc.*;
 public class CPTMax{
 	public static void main(String[] args){
 		Console con = new Console();
-		con.println("Hello World");
 		
-		String strWord;
+		char chrLetter;
+		String strWord = "eggplant";
+		int intLength;
+		int intCount;
 		
-		con.println("Give me a word");
-		strWord = con.readLine();
+		intLength = strWord.length();
 		
-		if(strWord.length() > 0){
-			con.println("Nice!");
+		for(intCount = 1; intCount <= intLength; intCount++){
+			con.print("_ ");
+		}
+		con.println();
+		con.println("You have "+intLength+" points.");
+		con.println("Guess a letter");
+		chrLetter = con.readChar();
+		
+		for(intCount = 0; intCount <= intLength-1; intCount++){
+			if(chrLetter != strWord.charAt(intCount)){
+				con.print("_ ");
+			}
+			if(chrLetter == strWord.charAt(intCount)){
+				con.print(chrLetter + " ");
+			}
 		}
 	}
 }
