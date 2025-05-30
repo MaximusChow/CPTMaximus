@@ -5,10 +5,10 @@ public class CPTMax{
 		Console con = new Console(1280, 720);
 		
 		String strGuess;
-		String strWord = "eggplant";
+		String strWord = "bread";
 		int intLength;
 		int intCount;
-		int intGuessed = 0;
+		boolean blnCorrectGuess;
 		
 		
 		
@@ -18,6 +18,9 @@ public class CPTMax{
 		
 		String strLetter[];
 		strLetter = new String[intPoints];
+		
+		String strGuessed[];
+		strGuessed = new String[intLength];
 		
 		for(intCount = 1; intCount <= intLength; intCount++){
 			strLetter[intCount-1] = strWord.substring(intCount-1, intCount);
@@ -37,13 +40,25 @@ public class CPTMax{
 			for(intCount = 0; intCount < intLength; intCount++){
 				if(strGuess.equalsIgnoreCase(strLetter[intCount])){
 					con.println("You correctly guessed a letter!");
-					//add an array that has all of the positions that were guessed
+					strGuessed[intCount] = strGuess;
+					blnCorrectGuess = true;
 				}
+			}
+			
+			if(blnCorrectGuess = false){
+				con.println("Wrong guess.");
+				intPoints--;
 			}
 			//print out the letters that were guessed using both arrays
 			//con.print("_");
 			//con.print(strLetter[intCount]);
 			
+			//for(intCount = 0; intCount < intLength; intCount++){
+				if(strGuessed[0] == (strLetter[0])){
+					con.print(strLetter[0]);
+				}
+				
+			//}
 			
 		}
 	}
