@@ -4,84 +4,86 @@ public class CPTMax{
 	public static void main(String[] args){
 		Console con = new Console(1280, 720);
 		
+		//Declare variables
+		String strWord = "dress";
 		String strGuess;
-		String strWord = "cat";
-		int intLength;
 		int intCount;
-		boolean blnCorrectGuess;
-		int intUnderscores;
-		
-		
-		intLength = strWord.length();
+		int intLength = strWord.length();
 		int intPoints = intLength;
-		intUnderscores = intLength;
-		System.out.println("There are "+intPoints+" remaining letters to be guessed");
+		boolean blnWin = false;
 		
-		String strLetter[];
-		strLetter = new String[intPoints];
+		//Create one array for the word
+		String strWordArray[];
+		strWordArray = new String[intLength];
 		
+		//Create one array for the guessed letters
 		String strGuessed[];
 		strGuessed = new String[intLength];
 		
+		//input the letters of the word into columns of an array
 		for(intCount = 1; intCount <= intLength; intCount++){
-			strLetter[intCount-1] = strWord.substring(intCount-1, intCount);
+			strWordArray[intCount-1] = strWord.substring(intCount-1, intCount);
+			
 		}
 		
-		
-		for(intCount = 1; intCount <= intLength; intCount++){
-			con.print("_");
-			con.sleep(100);
-		}
-		
-		while(intPoints != 0){
-			con.println("\nYou have "+intPoints+" points.");
-			con.println("Guess a letter");
-			strGuess = con.readLine();
-			
-			
+		//Gameplay
+		while(intPoints > 0){
+			//Printing the underscores: Check if previous letters were guessed
 			for(intCount = 0; intCount < intLength; intCount++){
-				if(strGuess.equals(strLetter[intCount])){
-					strGuessed[intCount] = strGuess;
-					
-					blnCorrectGuess = true;
-					
-				}else{
-					
-					
-				}
-			}
-			
-			for(intCount = 0; intCount < intLength; intCount++){
-				if(strGuessed[intCount] == strLetter[intCount]){
+				if(strGuessed[intCount] != null){
+					System.out.println("This letter was guessed");
 					con.print(strGuessed[intCount]);
 				}else{
 					con.print("_");
 				}
-				
 			}
 			
+			//Ask for a guess
+			con.println("\nYou have: "+intPoints+" points remaining.\nGuess a letter. ");
+			strGuess = con.readLine();
 			
-			if(intUnderscores == intLength){
-				con.println("\nYou guessed a correct letter!");
-				intUnderscores = intUnderscores -1;
-				con.println("You have "+intUnderscores+" letters left to guess.");
-				
-				
-			}else{
-				con.println("\nThat was not one of the letters.");
-				con.println("You have "+intUnderscores+" letters left to guess.");
+			
+			//Check if any letter matches the wordArray, then store the data in the spot
+			int intWasThatGuessCorrect = 0;
+			for(intCount = 0; intCount < intLength; intCount++){
+				if(strGuess.equals(strWordArray[intCount])){
+					System.out.print(strGuess);
+					strGuessed[intCount] = strGuess;
+					intWasThatGuessCorrect = 1;
+				}else{
+					System.out.print("_");
+				}
+			}
+			
+			//Check if that was a good guess or not
+			if(intWasThatGuessCorrect == 0){
+				System.out.println("That was a wrong guess.");
 				intPoints = intPoints - 1;
-				
-				
+			}else if(intWasThatGuessCorrect == 1){
+				System.out.println("That was an AWESOME guess.");
+			}
+			
+			//Check if player won
+			blnWin = true;
+			for(intCount = 0; intCount < intLength; intCount++){
+				if(strWordArray[intCount].equals(strGuessed[intCount])){
+					System.out.print("g");
+				}else{
+					System.out.print("b");
+					blnWin = false;
+				}
 			}
 			
 			
 		}
-		
-		con.clear();
-		con.println("You Lose!");
-		con.println("Points: "+intPoints);
-		
+		if(blnWin = true){
+				con.clear();
+				con.println("You win!");
+		}
+			con.clear();
+			con.println("You Lose!");
 	}
-}		
+		
+}
+		
 
