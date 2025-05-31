@@ -1,0 +1,17 @@
+soccer
+ultimatefrisbee
+running
+volleyball
+baseball
+basketball
+speedwalking
+golf
+badminton
+tennis
+luge
+football
+pickleball
+swimming
+gymnastics
+bobsledding
+cycling
