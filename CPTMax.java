@@ -33,7 +33,7 @@ public class CPTMax{
 			//Play game was selected
 			if(intMenuOption == 1){
 				con.println("Select Your Theme:");
-			}
+			
 			
 			//Open text files
 			TextInputFile themes = new TextInputFile("themes.txt");
@@ -231,7 +231,7 @@ public class CPTMax{
 					con.println("You Win!");
 					con.println("You gained: "+intPoints+" points. Added to leaderboard.");
 					
-					TextOutputFile leaderboard = new TextOutputFile("leaderboard.txt");
+					TextOutputFile leaderboard = new TextOutputFile("leaderboard.txt", true);
 					leaderboard.println(strName);
 					leaderboard.println(intPoints);
 					leaderboard.close();
@@ -260,10 +260,144 @@ public class CPTMax{
 					}
 				}
 			}
+			
+			}
+			//Leaderboard option
+			if(intMenuOption == 2){
+				con.println("Leaderboard:\n");
+				TextInputFile leaderboard = new TextInputFile("leaderboard.txt");
+				int intNumberOfRows = 0;
+				String strReadNames;
+				int intRow = 0;
+				//Use null because null indicates theres nothing to read, if it is not null then keep reading
+				while ((strReadNames = leaderboard.readLine()) != null) {
+					intNumberOfRows += 1;
+				}
+				
+				leaderboard.close();
+				leaderboard = new TextInputFile("leaderboard.txt");
+				System.out.println("There are "+intNumberOfRows+" rows of names on the leaderboard");
+				int intNumberOfEntries = intNumberOfRows / 2;
+				
+				//creating 2D array 
+				String strLeaderboard[][];
+				strLeaderboard = new String[intNumberOfRows][2];
+				
+				//input data into array
+				System.out.println("Current array strLeaderboard[][], unsorted");
+				for(intRow = 0; intRow < intNumberOfEntries; intRow++){
+					strLeaderboard[intRow][0] = leaderboard.readLine();
+					System.out.println(strLeaderboard[intRow][0]);
+					strLeaderboard[intRow][1] = leaderboard.readLine();
+					System.out.println(strLeaderboard[intRow][1]);
+				}
+				leaderboard.close();
+				
+				System.out.println("Sorted in descending order by score: ");
+				//Sorting array---------------------------------------------------------------------------------------------------------------------------------
+				int intCount4;
+				int intCount5;
+				String strTempName;
+				String strTempScore;
+				
+				
+				for(intCount4 = 0; intCount4 < intNumberOfEntries-1; intCount4++){
+					for(intCount5 = 0; intCount5 < intNumberOfEntries-1; intCount5++){
+						
+						//Swapping
+						if(Integer.parseInt(strLeaderboard[intCount5][1]) < Integer.parseInt(strLeaderboard[intCount5+1][1])){
+						
+							strTempName = strLeaderboard[intCount5][0];
+							strLeaderboard[intCount5][0] = strLeaderboard[intCount5+1][0];
+							strLeaderboard[intCount5+1][0] = strTempName;
+							
+							strTempScore = strLeaderboard[intCount5][1];
+							strLeaderboard[intCount5][1] = strLeaderboard[intCount5+1][1];
+							strLeaderboard[intCount5+1][1] = strTempScore;
+							
+						}
+						
+					}
+				}
+				for(intCount5 = 0; intCount5 < intNumberOfEntries; intCount5++){
+					con.println(strLeaderboard[intCount5][0] + "-" + strLeaderboard[intCount5][1]);
+				}
+				//-------------------------------------------------------------------------------------------------------------------------------
+				String strAnswer;
+				con.println("\nWould you like to return to the menu? YES or NO");
+				strAnswer = con.readLine();
+				if(strAnswer.equalsIgnoreCase("yes")){
+					con.clear();
+				}else{
+					con.clear();
+					con.println("Would you like to quit the application?");
+					strAnswer = con.readLine();
+					con.clear();
+					if(strAnswer.equalsIgnoreCase("yes")){
+						blnReturnToMenu = false;
+						con.closeConsole();
+					}
+				}
+			}
+			//Add Theme Option
+			String strNewTheme;
+			String strNewWord = "";
+			if(intMenuOption == 3){
+				con.clear();
+				con.println("Add theme:\nGive me the theme name. Please enter '.txt' at the end and ensure no spaces.");
+				strNewTheme = con.readLine();
+				
+				TextOutputFile master = new TextOutputFile("themes.txt", true);
+				master.println(strNewTheme);
+				master.close();
+				
+				TextOutputFile newUserFile = new TextOutputFile(strNewTheme);
+				con.println("Give me words to add to the theme. Enter 'stop' to stop");
+				while(!strNewWord.equalsIgnoreCase("stop")){
+					con.println("Keep adding words.");
+					if(strNewWord.equalsIgnoreCase("stop")){
+						break;
+					}else{
+						strNewWord = con.readLine();
+						newUserFile.println(strNewWord);
+					}
+				}
+				con.clear();
+				con.println("Finished.");
+				con.sleep(1000);
+				
+				String strAnswer;
+				con.println("\nWould you like to return to the menu? YES or NO");
+				strAnswer = con.readLine();
+				if(strAnswer.equalsIgnoreCase("yes")){
+					con.clear();
+				}else{
+					con.clear();
+					con.println("Would you like to quit the application?");
+					strAnswer = con.readLine();
+					con.clear();
+					if(strAnswer.equalsIgnoreCase("yes")){
+						blnReturnToMenu = false;
+						con.closeConsole();
+					}
+				}
+			}
+			
+			//Quit Option
+			String strAnswer;
+			if(intMenuOption == 4){
+				con.println("Are you sure you would like to quit? YES or NO");
+				strAnswer = con.readLine();
+				if(strAnswer.equalsIgnoreCase("yes")){
+					con.closeConsole();
+				}else{
+					con.clear();
+				}
+			}
 		}
 		
 	}
 		
 }
-		
+
 
