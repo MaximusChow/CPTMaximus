@@ -144,6 +144,7 @@ public class CPTMax{
 			
 			while(blnRestart == true){
 				//Declare variables
+				//DEBUG ERROR move to the next file when the first one reaches the end 
 				intFile1 = intFile1+1;
 				String strWord = strFileWords[intFile1][0];
 				String strGuess;
@@ -352,12 +353,14 @@ public class CPTMax{
 				master.close();
 				
 				TextOutputFile newUserFile = new TextOutputFile(strNewTheme);
+				
+				//DEBUG ERROR stop gets included
 				con.println("Give me words to add to the theme. Enter 'stop' to stop");
 				while(!strNewWord.equalsIgnoreCase("stop")){
-					con.println("Keep adding words.");
 					if(strNewWord.equalsIgnoreCase("stop")){
 						break;
 					}else{
+						con.println("Keep adding words.");
 						strNewWord = con.readLine();
 						newUserFile.println(strNewWord);
 					}
@@ -396,8 +399,7 @@ public class CPTMax{
 			}
 		}
 		
-	}
-		
+	}	
 }
 
 
