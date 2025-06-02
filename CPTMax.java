@@ -13,22 +13,31 @@ public class CPTMax{
 		con.sleep(1500);
 		con.clear();
 		
+		//If user finsihed a theme
+		boolean blnFinishedTheme = false;
+		int intFinishedTheme;
 		//Menu
 		boolean blnReturnToMenu = true;
 		while(blnReturnToMenu == true){
-		
-			int intMenuOption = 0;
-			con.println(" GGGGG   UU   UU   EEEEE   SSSS    SSSS                       W     W   OOOOO    RRRRR   DDDD  ");
-			con.println("GG   GG  UU   UU  E       SS   S  SS   S   TTTT H   H  EEEE   W     W  OO   OO  RR  RR  D   DD   ");
-			con.println("G        UU   UU  EEEEEE   SS       SS      TT  H   H  E      W     W  OO   OO  R   RR  D   DD  ");
-			con.println("GG GGGG  UU   UU  E          SS      SS     TT  HHHHH  EEEE   W  W  W  OO   OO  RRRRR   D   DD  ");
-			con.println("GG   GG  UU   UU  E       SS  SS  SS  SS    TT  H   H  E      W W W W  OO   OO  R  R    D   DD ");
-			con.println(" GGGG     UUUUU   EEEEEE   SSSS    SSSS     TT  H   H  EEEE    WW WW    OOOOO   R   RR  DDDDD \n");
 			
-			con.println("PLEASE SELECT A NUMBER followed by ENTER: \n1. Play Game \n2. View Leaderboard \n3. Add Theme \n4. Quit");
-			intMenuOption = con.readInt();
-			con.sleep(500);
-			con.clear();
+			int intMenuOption = 0;
+			if(blnFinishedTheme == true){
+				intMenuOption = 1;
+			}else{
+				con.println(" GGGGG   UU   UU   EEEEE   SSSS    SSSS                       W     W   OOOOO    RRRRR   DDDD  ");
+				con.println("GG   GG  UU   UU  E       SS   S  SS   S   TTTT H   H  EEEE   W     W  OO   OO  RR  RR  D   DD   ");
+				con.println("G        UU   UU  EEEEEE   SS       SS      TT  H   H  E      W     W  OO   OO  R   RR  D   DD  ");
+				con.println("GG GGGG  UU   UU  E          SS      SS     TT  HHHHH  EEEE   W  W  W  OO   OO  RRRRR   D   DD  ");
+				con.println("GG   GG  UU   UU  E       SS  SS  SS  SS    TT  H   H  E      W W W W  OO   OO  R  R    D   DD ");
+				con.println(" GGGG     UUUUU   EEEEEE   SSSS    SSSS     TT  H   H  EEEE    WW WW    OOOOO   R   RR  DDDDD \n");
+				
+				con.println("PLEASE SELECT A NUMBER followed by ENTER: \n1. Play Game \n2. View Leaderboard \n3. Add Theme \n4. Quit\n");
+				intMenuOption = con.readInt();
+				con.sleep(500);
+				con.clear();
+			
+			}
+			blnFinishedTheme = false;
 			
 			//Play game was selected
 			if(intMenuOption == 1){
@@ -112,7 +121,7 @@ public class CPTMax{
 			}
 			//-------------------------------------------------------------------------------------------------------------------------------
 			
-			con.sleep(2000);
+			con.sleep(1000);
 			con.clear();
 			con.println("Complete!");
 			con.sleep(1000);
@@ -120,7 +129,7 @@ public class CPTMax{
 			
 			//Game
 			int intWait;
-			for(intWait = 0; intWait < 4; intWait++){
+			for(intWait = 0; intWait < 2; intWait++){
 				con.println("Starting game. \n\nInstructions: \nEach word will have a certain number of letters.\nYou will be given the same number of points as letters in the word. \nTry to guess the word before you run out of points!");
 				con.sleep(450);
 				con.clear();
@@ -143,14 +152,32 @@ public class CPTMax{
 			boolean blnRestart = true;
 			
 			while(blnRestart == true){
-				//Declare variables
-				//DEBUG ERROR move to the next file when the first one reaches the end 
-				intFile1 = intFile1+1;
+				//Declare variables 
+				if(intFile1 <= intNumberOfWords-2){
+					intFile1 = intFile1+1;
+					System.out.println("Number of words: "+intNumberOfWords);
+					System.out.println("Word you are on: "+intFile1);
+				}else{
+					con.println("You finished all the words in this theme! Would you like to return to: \n1. Menu\n2. Select Theme");
+					intFinishedTheme = con.readInt();
+					con.clear();
+					if(intFinishedTheme == 2){
+						blnFinishedTheme = true;
+						break;
+					}break;
+				}
+				
 				String strWord = strFileWords[intFile1][0];
 				String strGuess;
 				int intCount;
 				int intLength = strWord.length();
 				int intPoints = intLength;
+				
+				//Cheat statitan gives 10 extra tries/points
+				if(strName.equalsIgnoreCase("statitan")){
+					intPoints = intPoints + 10;
+				}
+				
 				int intWinCount = 0;
 				
 			
@@ -198,6 +225,7 @@ public class CPTMax{
 					}
 					
 					//Check if that was a correct guess or not
+					con.clear();
 					if(intWasThatGuessCorrect == 0){
 						System.out.println("That was a wrong guess.");
 						con.println("WRONG! -1 point.");
@@ -234,6 +262,7 @@ public class CPTMax{
 					
 					TextOutputFile leaderboard = new TextOutputFile("leaderboard.txt", true);
 					leaderboard.println(strName);
+					
 					leaderboard.println(intPoints);
 					leaderboard.close();
 					
@@ -249,10 +278,11 @@ public class CPTMax{
 				
 				if(strAnswer.equalsIgnoreCase("yes")){
 					blnRestart = true;
+					con.clear();
 				}else{
 					blnRestart = false;
 					con.clear();
-					con.println("Would you like to quit the application?");
+					con.println("Would you like to quit the application? YES or NO");
 					strAnswer = con.readLine();
 					con.clear();
 					if(strAnswer.equalsIgnoreCase("yes")){
@@ -361,6 +391,7 @@ public class CPTMax{
 						break;
 					}else{
 						con.println("Keep adding words.");
+						
 						strNewWord = con.readLine();
 						newUserFile.println(strNewWord);
 					}
