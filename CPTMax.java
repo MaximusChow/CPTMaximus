@@ -1,11 +1,16 @@
 import arc.*;
+import java.awt.Color;
 
 public class CPTMax{
 	public static void main(String[] args){
 		Console con = new Console(1280, 720);
 		//Before Menu
+		con.setDrawColor(new Color(0, 0, 0));
+		con.fillRect(0, 0, 1280, 720);
+		
+		con.setDrawColor(Color.BLACK);
 		String strName;
-		con.println("What is your name?");
+		con.println("Welcome to Guess The Word. What is your name?");
 		strName = con.readLine();
 		System.out.println("Name: "+strName);
 		con.clear();
