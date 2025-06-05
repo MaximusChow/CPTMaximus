@@ -8,8 +8,6 @@ public class maxtesting{
 		int intX = 350;
 		con.setDrawColor(Color.BLACK);
 		con.fillRect(0, 0, 1280, 720);
-		con.setDrawColor(Color.WHITE);
-		con.fillRect(500, intX, 200, 50);
 		
 		con.setDrawColor(Color.WHITE);
 		con.drawString("Play Game", 550, 360);

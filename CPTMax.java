@@ -301,17 +301,17 @@ public class CPTMax{
 			//Leaderboard option
 			if(intMenuOption == 2){
 				con.println("Leaderboard:\n");
-				TextInputFile leaderboard = new TextInputFile("leaderboard.txt");
+				TextInputFile leaderboarder = new TextInputFile("leaderboard.txt");
 				int intNumberOfRows = 0;
 				String strReadNames;
 				int intRow = 0;
 				//Use null because null indicates theres nothing to read, if it is not null then keep reading
-				while ((strReadNames = leaderboard.readLine()) != null) {
+				while ((strReadNames = leaderboarder.readLine()) != null) {
 					intNumberOfRows += 1;
 				}
 				
-				leaderboard.close();
-				leaderboard = new TextInputFile("leaderboard.txt");
+				leaderboarder.close();
+				TextInputFile leaderboard2 = new TextInputFile("leaderboard.txt");
 				System.out.println("There are "+intNumberOfRows+" rows of names on the leaderboard");
 				int intNumberOfEntries = intNumberOfRows / 2;
 				
@@ -322,12 +322,12 @@ public class CPTMax{
 				//input data into array
 				System.out.println("Current array strLeaderboard[][], unsorted");
 				for(intRow = 0; intRow < intNumberOfEntries; intRow++){
-					strLeaderboard[intRow][0] = leaderboard.readLine();
+					strLeaderboard[intRow][0] = leaderboard2.readLine();
 					System.out.println(strLeaderboard[intRow][0]);
-					strLeaderboard[intRow][1] = leaderboard.readLine();
+					strLeaderboard[intRow][1] = leaderboard2.readLine();
 					System.out.println(strLeaderboard[intRow][1]);
 				}
-				leaderboard.close();
+				leaderboard2.close();
 				
 				System.out.println("Sorted in descending order by score: ");
 				//Sorting array---------------------------------------------------------------------------------------------------------------------------------
@@ -389,15 +389,13 @@ public class CPTMax{
 				
 				TextOutputFile newUserFile = new TextOutputFile(strNewTheme);
 				
-				//DEBUG ERROR stop gets included
 				con.println("Give me words to add to the theme. Enter 'stop' to stop");
 				while(!strNewWord.equalsIgnoreCase("stop")){
+					con.println("Keep adding words.");
+					strNewWord = con.readLine();
 					if(strNewWord.equalsIgnoreCase("stop")){
 						break;
 					}else{
-						con.println("Keep adding words.");
-						
-						strNewWord = con.readLine();
 						newUserFile.println(strNewWord);
 					}
 				}
