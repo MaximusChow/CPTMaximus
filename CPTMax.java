@@ -21,6 +21,7 @@ public class CPTMax{
 		//If user finsihed a theme
 		boolean blnFinishedTheme = false;
 		int intFinishedTheme;
+		
 		//Menu
 		boolean blnReturnToMenu = true;
 		while(blnReturnToMenu == true){
@@ -36,9 +37,24 @@ public class CPTMax{
 				con.println("GG   GG  UU   UU  E       SS  SS  SS  SS    TT  H   H  E      W W W W  OO   OO  R  R    D   DD ");
 				con.println(" GGGG     UUUUU   EEEEEE   SSSS    SSSS     TT  H   H  EEEE    WW WW    OOOOO   R   RR  DDDDD \n");
 				
-				con.println("PLEASE SELECT A NUMBER followed by ENTER: \n1. Play Game \n2. View Leaderboard \n3. Add Theme \n4. Quit\n");
-				intMenuOption = con.readInt();
-				con.sleep(500);
+				con.println("PLEASE ENTER A LETTER : \n(P)lay Game \n(V)iew Leaderboard \n(A)dd Theme \n(H)elp \n(Q)uit\n");
+				
+				if(con.getKey() == 80){
+					intMenuOption = 1;
+				}else if(con.currentKey() == 86){
+					intMenuOption = 2;
+				}else if(con.currentKey() == 65){
+					intMenuOption = 3;
+				}else if(con.currentKey() == 72){
+					intMenuOption = 4;
+				}else if(con.currentKey() == 81){
+					intMenuOption = 5;
+				}//secret menu
+				else if(con.currentKey() == 83){
+					intMenuOption = 6;
+				}
+				
+				con.sleep(100);
 				con.clear();
 			
 			}
@@ -48,22 +64,39 @@ public class CPTMax{
 			if(intMenuOption == 1){
 				con.println("Select Your Theme:");
 			
-			
-			//Open text files
-			TextInputFile themes = new TextInputFile("themes.txt");
-			
-			String strTheme;
-			while(themes.eof() == false){
-				strTheme = themes.readLine();
-				con.println(strTheme);
+			boolean blnValidTheme = true;
+			while(blnValidTheme == true){
+				//Open text files
+				TextInputFile themes = new TextInputFile("themes.txt");
+				int intNumOfThemes = 0;
+				String strTheme;
+				while(themes.eof() == false){
+					strTheme = themes.readLine();
+					con.println(strTheme);
+					intNumOfThemes = intNumOfThemes + 1;
+				}
+				con.println("Select your theme by typing in the theme name. Please include the '.txt' and ensure no typos.");
+				strTheme = con.readLine();
+				themes.close();
+				con.clear();
+				
+				con.println("You have selected the "+strTheme+" file for your theme. \nLoading file.");
+				con.sleep(2000);
+				TextInputFile themes2 = new TextInputFile("themes.txt");
+				String strTheme2;
+				while(themes2.eof() == false){
+					strTheme2 = themes2.readLine();
+					if(strTheme2.equalsIgnoreCase(strTheme)){
+						intNumOfThemes = intNumOfThemes - 1;
+					}
+				}
+				themes2.close();
+				if(intNumOfThemes != 0){
+					con.println("Invalid Theme");
+				}else{
+					blnValidTheme = false;
+				}
 			}
-			con.println("Select your theme by typing in the theme name. Please include the '.txt'.");
-			strTheme = con.readLine();
-			themes.close();
-			con.clear();
-			
-			con.println("You have selected the "+strTheme+" file for your theme. \nLoading file.");
-			
 			TextInputFile selectedTheme = new TextInputFile(strTheme);
 			String strWords;
 			int intNumberOfWords = 0;
@@ -133,18 +166,20 @@ public class CPTMax{
 			con.clear();
 			
 			//Game
+			
+			//Animation for loading while instructions
 			int intWait;
 			for(intWait = 0; intWait < 2; intWait++){
-				con.println("Starting game. \n\nInstructions: \nEach word will have a certain number of letters.\nYou will be given the same number of points as letters in the word. \nTry to guess the word before you run out of points!");
+				con.println("Starting game. \n\nInstructions: \nEach word will have a certain number of letters.\nYou may NOT guess more than one letter at a time. \nTry to guess the word before you run out of points!");
 				con.sleep(450);
 				con.clear();
-				con.println("Starting game.. \n\nInstructions: \nEach word will have a certain number of letters.\nYou will be given the same number of points as letters in the word. \nTry to guess the word before you run out of points!");
+				con.println("Starting game. \n\nInstructions: \nEach word will have a certain number of letters.\nYou may NOT guess more than one letter at a time. \nTry to guess the word before you run out of points!");
 				con.sleep(450);
 				con.clear();
-				con.println("Starting game... \n\nInstructions: \nEach word will have a certain number of letters.\nYou will be given the same number of points as letters in the word. \nTry to guess the word before you run out of points!");
+				con.println("Starting game. \n\nInstructions: \nEach word will have a certain number of letters.\nYou may NOT guess more than one letter at a time. \nTry to guess the word before you run out of points!");
 				con.sleep(450);
 				con.clear();
-				con.println("Starting game \n\nInstructions: \nEach word will have a certain number of letters.\nYou will be given the same number of points as letters in the word. \nTry to guess the word before you run out of points!");
+				con.println("Starting game. \n\nInstructions: \nEach word will have a certain number of letters.\nYou may NOT guess more than one letter at a time. \nTry to guess the word before you run out of points!");
 				con.sleep(450);
 				con.clear();
 			}
@@ -258,7 +293,7 @@ public class CPTMax{
 					}
 					
 				}
-				
+				//Win|| lose 
 				String strAnswer = "";
 				if(intWinCount == intLength){
 					con.clear();
@@ -420,9 +455,34 @@ public class CPTMax{
 				}
 			}
 			
+			//Help Menu
+			if(intMenuOption == 4){
+				con.println("Help");
+				con.println("Welcome to Guess The Word! \n\nUpon arriving in the menu, you are able to select from 5 options using the keys on your keyboard. \nFor example, if the menu option is (P)lay game, then you press 'p' to start. \nWhen you enter the game, you must select your theme. Ensure no typos when typing the full .txt file. \nYou will be sent to the gameplay next. \n\n(P)lay game \nWhen you are in the game, you will have as many points as letters in the secret word, \nunless you have a certain name... \nAnyways, your points will either stay the same when you guess a letter or decrease by 1 point when you \nguess a wrong letter. You may NOT enter full words; only ONE letter at a time.");
+				con.println("\n(A)dd Theme \nFor the (A)dd Theme menu option, you must enter the exact file name \nfollowed by '.txt' in order to enter your desired theme. \nThen you will enter a word followed by the ENTER key to start the next entry. \nContinue for as many words as you want in the theme. \nWhen you are done, you will type 'stop' followed by pressing the ENTER key to finish.");
+				con.println("\n(V)iew Leaderboard and (Q)uit are straightforward; \nit will ask if you want to return to menu or quit application. \nIf you need further help, please email maximus.chow27@ycdsbk12.ca.");
+				
+				
+				String strAnswer;
+				con.println("\nWould you like to return to the menu? YES or NO");
+				strAnswer = con.readLine();
+				if(strAnswer.equalsIgnoreCase("yes")){
+					con.clear();
+				}else{
+					con.clear();
+					con.println("Would you like to quit the application?");
+					strAnswer = con.readLine();
+					con.clear();
+					if(strAnswer.equalsIgnoreCase("yes")){
+						blnReturnToMenu = false;
+						con.closeConsole();
+					}
+				}
+			}
+			
 			//Quit Option
 			String strAnswer;
-			if(intMenuOption == 4){
+			if(intMenuOption == 5){
 				con.println("Are you sure you would like to quit? YES or NO");
 				strAnswer = con.readLine();
 				if(strAnswer.equalsIgnoreCase("yes")){
@@ -431,8 +491,52 @@ public class CPTMax{
 					con.clear();
 				}
 			}
+			
+			//Secret Menu
+			int intLaughs = 0;
+			if(intMenuOption == 6){
+				con.println("You discovered the secret menu! Here's your reward.");
+				con.println("\n\nWhy did the Java developer quit his job?");
+				con.sleep(1400);
+				con.println("                                                                                                     Why?");
+				con.sleep(2000);
+				
+				con.println("\nBecause he didn’t get arrays.");
+				con.sleep(1000);
+				for(intLaughs = 0; intLaughs < 50; intLaughs++){
+					con.print("HA");
+					con.sleep(50);
+				}
+				
+				con.println("\n\nWould you like another joke?");
+				strAnswer = con.readLine();
+				if(strAnswer.equalsIgnoreCase("yes")){
+					con.println("A programmer is heading out to the grocery store, so his wife tells him \n'get a gallon of milk, and if they have eggs, get a dozen.'\n He returns with 13 gallons of milk.");
+					con.sleep(4000);
+					for(intLaughs = 0; intLaughs < 50; intLaughs++){
+					con.print("HA");
+					con.sleep(50);
+				}
+				}else{
+					con.sleep(100);
+				}
+				
+				con.println("\n\n\nWould you like to return to the menu? YES or NO");
+				strAnswer = con.readLine();
+				if(strAnswer.equalsIgnoreCase("yes")){
+					con.clear();
+				}else{
+					con.clear();
+					con.println("Would you like to quit the application?");
+					strAnswer = con.readLine();
+					con.clear();
+					if(strAnswer.equalsIgnoreCase("yes")){
+						blnReturnToMenu = false;
+						con.closeConsole();
+					}
+				}
+			}
 		}
-		
 	}	
 }
 

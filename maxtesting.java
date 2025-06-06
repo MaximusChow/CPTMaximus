@@ -4,8 +4,14 @@ import java.awt.Color;
 public class maxtesting{
 	public static void main(String[] args){
 		Console con = new Console(1280, 720);
+		//tests character key code
+		while(12>2){
+			System.out.println(con.getKey());
+			con.sleep(200);
+			con.clear();
+		}
 		
-		int intX = 350;
+		/*int intX = 350;
 		con.setDrawColor(Color.BLACK);
 		con.fillRect(0, 0, 1280, 720);
 		
@@ -49,11 +55,9 @@ public class maxtesting{
 				}
 				con.sleep(100);
 				if(intX == 400 || intX == 450 || intX == 500){
-					con.setDrawColor(Color.BLACK);
-					con.fillRect(450, intX, 25, 7);
+					
 					intX = intX - 50;
-					con.setDrawColor(Color.WHITE);
-					con.fillRect(450, intX, 25, 7);
+					
 				}
 			}
 			while(con.getKey() == 40){
@@ -63,11 +67,9 @@ public class maxtesting{
 				}
 				
 				if(intX == 350 || intX == 400 || intX == 450){
-					con.setDrawColor(Color.BLACK);
-					con.fillRect(450, intX, 25, 7);
+					
 					intX = intX + 50;
-					con.setDrawColor(Color.WHITE);
-					con.fillRect(450, intX, 25, 7);
+					
 				}
 			}
 			
@@ -79,7 +81,7 @@ public class maxtesting{
 			
 		}con.println("outisde");
 		
-		/*while(true){
+		while(true){
 			
 			while(con.currentKey() == 38){
 				if(intX <= 350){
