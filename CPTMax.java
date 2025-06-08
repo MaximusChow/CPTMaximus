@@ -63,39 +63,43 @@ public class CPTMax{
 			//Play game was selected
 			if(intMenuOption == 1){
 				con.println("Select Your Theme:");
-			
+				
+			String strTheme = "";
+			boolean blnResult;
 			boolean blnValidTheme = true;
 			while(blnValidTheme == true){
 				//Open text files
 				TextInputFile themes = new TextInputFile("themes.txt");
 				int intNumOfThemes = 0;
-				String strTheme;
+				int intNumOfThemesMinusOne = 0;
+				
+				//find out number of themes, print themes too
 				while(themes.eof() == false){
 					strTheme = themes.readLine();
 					con.println(strTheme);
 					intNumOfThemes = intNumOfThemes + 1;
 				}
+				themes.close();
+				
+				//read selected theme
 				con.println("Select your theme by typing in the theme name. Please include the '.txt' and ensure no typos.");
 				strTheme = con.readLine();
-				themes.close();
+				
 				con.clear();
 				
 				con.println("You have selected the "+strTheme+" file for your theme. \nLoading file.");
-				con.sleep(2000);
-				TextInputFile themes2 = new TextInputFile("themes.txt");
-				String strTheme2;
-				while(themes2.eof() == false){
-					strTheme2 = themes2.readLine();
-					if(strTheme2.equalsIgnoreCase(strTheme)){
-						intNumOfThemes = intNumOfThemes - 1;
-					}
-				}
-				themes2.close();
-				if(intNumOfThemes != 0){
-					con.println("Invalid Theme");
-				}else{
+				con.sleep(1500);
+				
+				blnResult = blnisValid(strTheme);
+				if(blnResult == true){
 					blnValidTheme = false;
+				}else{
+					con.clear();
+					con.println("Invalid Theme.");
+					con.sleep(1500);
+					con.clear();
 				}
+				
 			}
 			TextInputFile selectedTheme = new TextInputFile(strTheme);
 			String strWords;
@@ -173,13 +177,13 @@ public class CPTMax{
 				con.println("Starting game. \n\nInstructions: \nEach word will have a certain number of letters.\nYou may NOT guess more than one letter at a time. \nTry to guess the word before you run out of points!");
 				con.sleep(450);
 				con.clear();
-				con.println("Starting game. \n\nInstructions: \nEach word will have a certain number of letters.\nYou may NOT guess more than one letter at a time. \nTry to guess the word before you run out of points!");
+				con.println("Starting game.. \n\nInstructions: \nEach word will have a certain number of letters.\nYou may NOT guess more than one letter at a time. \nTry to guess the word before you run out of points!");
 				con.sleep(450);
 				con.clear();
-				con.println("Starting game. \n\nInstructions: \nEach word will have a certain number of letters.\nYou may NOT guess more than one letter at a time. \nTry to guess the word before you run out of points!");
+				con.println("Starting game... \n\nInstructions: \nEach word will have a certain number of letters.\nYou may NOT guess more than one letter at a time. \nTry to guess the word before you run out of points!");
 				con.sleep(450);
 				con.clear();
-				con.println("Starting game. \n\nInstructions: \nEach word will have a certain number of letters.\nYou may NOT guess more than one letter at a time. \nTry to guess the word before you run out of points!");
+				con.println("Starting game \n\nInstructions: \nEach word will have a certain number of letters.\nYou may NOT guess more than one letter at a time. \nTry to guess the word before you run out of points!");
 				con.sleep(450);
 				con.clear();
 			}
@@ -537,7 +541,28 @@ public class CPTMax{
 				}
 			}
 		}
-	}	
+	}
+	
+	public static boolean blnisValid(String strWord){
+		boolean blnisValid = false;
+		String strThemer;
+		
+		//open themes for reading
+		TextInputFile themesValidation = new TextInputFile("themes.txt");
+		while(themesValidation.eof() == false){
+			strThemer = themesValidation.readLine();
+			if(strWord.equalsIgnoreCase(strThemer)){
+				blnisValid = true;
+			}
+		}
+		themesValidation.close();
+		
+		
+		return blnisValid;
+		
+	}
+
+				
 }
 
 
