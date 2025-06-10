@@ -5,7 +5,7 @@ public class CPTMax{
 	public static void main(String[] args){
 		Console con = new Console(1280, 720);
 		//Before Menu
-		con.setDrawColor(new Color(0, 0, 0));
+		con.setDrawColor(new Color(0, 0, 128));
 		con.fillRect(0, 0, 1280, 720);
 		
 		con.setDrawColor(Color.BLACK);
@@ -30,12 +30,12 @@ public class CPTMax{
 			if(blnFinishedTheme == true){
 				intMenuOption = 1;
 			}else{
-				con.println(" GGGGG   UU   UU   EEEEE   SSSS    SSSS                       W     W   OOOOO    RRRRR   DDDD  ");
-				con.println("GG   GG  UU   UU  E       SS   S  SS   S   TTTT H   H  EEEE   W     W  OO   OO  RR  RR  D   DD   ");
-				con.println("G        UU   UU  EEEEEE   SS       SS      TT  H   H  E      W     W  OO   OO  R   RR  D   DD  ");
-				con.println("GG GGGG  UU   UU  E          SS      SS     TT  HHHHH  EEEE   W  W  W  OO   OO  RRRRR   D   DD  ");
-				con.println("GG   GG  UU   UU  E       SS  SS  SS  SS    TT  H   H  E      W W W W  OO   OO  R  R    D   DD ");
-				con.println(" GGGG     UUUUU   EEEEEE   SSSS    SSSS     TT  H   H  EEEE    WW WW    OOOOO   R   RR  DDDDD \n");
+				con.println(" GGGGG   UU   UU  EEEEEE   SSSS    SSSS                       W     W   OOOOO    RRRR    DDDD  ");
+				con.println("GG   GG  UU   UU  E       SS   S  SS   S  TTTTT H   H  EEEE   W     W  OO   OO  RR  RR  D   DD   ");
+				con.println("G        UU   UU  EEEEEE   SS       SS      T   H   H  E      W     W  OO   OO  R   RR  D   DD  ");
+				con.println("GG GGGG  UU   UU  E          SS      SS     T   HHHHH  EEEE   W  W  W  OO   OO  RRRRR   D   DD  ");
+				con.println("GG   GG  UU   UU  E       S   SS  S   SS    T   H   H  E      W W W W  OO   OO  R  R    D   DD ");
+				con.println(" GGGG     UUUUU   EEEEEE   SSSS    SSSS     T   H   H  EEEE    W   W    OOOOO   R   RR  DDDDD \n");
 				
 				con.println("PLEASE ENTER A LETTER : \n(P)lay Game \n(V)iew Leaderboard \n(A)dd Theme \n(H)elp \n(Q)uit\n");
 				
@@ -163,6 +163,16 @@ public class CPTMax{
 			}
 			//-------------------------------------------------------------------------------------------------------------------------------
 			
+			int intWait;
+			
+			con.sleep(100);
+			con.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLoading...");
+			con.sleep(600);
+			con.println();
+			for(intWait = 0; intWait < 120; intWait++){
+				con.sleep(20);
+				con.print("|");
+			}
 			con.sleep(1000);
 			con.clear();
 			con.println("Complete!");
@@ -172,7 +182,6 @@ public class CPTMax{
 			//Game
 			
 			//Animation for loading while instructions
-			int intWait;
 			for(intWait = 0; intWait < 2; intWait++){
 				con.println("Starting game. \n\nInstructions: \nEach word will have a certain number of letters.\nYou may NOT guess more than one letter at a time. \nTry to guess the word before you run out of points!");
 				con.sleep(450);
@@ -194,9 +203,8 @@ public class CPTMax{
 			
 			
 			boolean blnRestart = true;
-			
+			//Restarting gameplay
 			while(blnRestart == true){
-				//Declare variables 
 				if(intFile1 <= intNumberOfWords-2){
 					intFile1 = intFile1+1;
 					System.out.println("Number of words: "+intNumberOfWords);
@@ -297,7 +305,7 @@ public class CPTMax{
 					}
 					
 				}
-				//Win|| lose 
+				//Win || lose 
 				String strAnswer = "";
 				if(intWinCount == intLength){
 					con.clear();
@@ -315,7 +323,13 @@ public class CPTMax{
 				}else if(intWinCount != intLength){
 					con.clear();
 					con.println("You Lose!");
-					con.println("You have: "+intPoints+" points.");
+					con.println("The word was: ");
+					
+					for(intCount = 0; intCount < intLength; intCount++){
+						con.print(strWordArray[intCount]);
+					}
+					
+					con.println("\nYou have: "+intPoints+" points.");
 					con.println("Play Again? Please type YES or NO.");
 					strAnswer = con.readLine();
 				}
@@ -501,22 +515,20 @@ public class CPTMax{
 			if(intMenuOption == 6){
 				con.println("You discovered the secret menu! Here's your reward.");
 				con.println("\n\nWhy did the Java developer quit his job?");
-				con.sleep(1400);
-				con.println("                                                                                                     Why?");
-				con.sleep(2000);
+				strAnswer = con.readLine();
 				
 				con.println("\nBecause he didn’t get arrays.");
-				con.sleep(1000);
+				con.sleep(2500);
 				for(intLaughs = 0; intLaughs < 50; intLaughs++){
 					con.print("HA");
 					con.sleep(50);
 				}
 				
-				con.println("\n\nWould you like another joke?");
+				con.println("\n\n\nWould you like another joke? Yes or No");
 				strAnswer = con.readLine();
 				if(strAnswer.equalsIgnoreCase("yes")){
 					con.println("A programmer is heading out to the grocery store, so his wife tells him \n'get a gallon of milk, and if they have eggs, get a dozen.'\n He returns with 13 gallons of milk.");
-					con.sleep(4000);
+					con.sleep(5000);
 					for(intLaughs = 0; intLaughs < 50; intLaughs++){
 					con.print("HA");
 					con.sleep(50);
@@ -543,6 +555,7 @@ public class CPTMax{
 		}
 	}
 	
+	//method checks if the theme entered exists
 	public static boolean blnisValid(String strWord){
 		boolean blnisValid = false;
 		String strThemer;
@@ -557,9 +570,7 @@ public class CPTMax{
 		}
 		themesValidation.close();
 		
-		
 		return blnisValid;
-		
 	}
 
 				

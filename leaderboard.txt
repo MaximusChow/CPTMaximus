@@ -2,13 +2,5 @@ Max
 4
 Bob2
 3
-Bob2
-1
-Bob2
-5
-Bob2
-3
-Bob2
-3
-Bob2
-4
+statitan
+17
