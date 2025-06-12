@@ -4,7 +4,13 @@ import java.awt.Color;
 public class CPTMax{
 	public static void main(String[] args){
 		Console con = new Console(1280, 720);
-		//Before Menu
+		
+		//Name          : Maximus Chow
+		//Program Name  : Guess The Word
+		//Last Modified : June 12, 2025
+		//Version       : v20.1.1
+		
+		//Before Menu, set background colour and ask for user name
 		con.setDrawColor(new Color(0, 0, 128));
 		con.fillRect(0, 0, 1280, 720);
 		
@@ -25,7 +31,6 @@ public class CPTMax{
 		//Menu
 		boolean blnReturnToMenu = true;
 		while(blnReturnToMenu == true){
-			
 			int intMenuOption = 0;
 			if(blnFinishedTheme == true){
 				intMenuOption = 1;
@@ -49,307 +54,302 @@ public class CPTMax{
 					intMenuOption = 4;
 				}else if(con.currentKey() == 81){
 					intMenuOption = 5;
-				}//secret menu
+				}
+				//secret menu
 				else if(con.currentKey() == 83){
 					intMenuOption = 6;
 				}
-				
 				con.sleep(100);
 				con.clear();
-			
 			}
 			blnFinishedTheme = false;
 			
 			//Play game was selected
 			if(intMenuOption == 1){
 				con.println("Select Your Theme:");
+				String strTheme = "";
+				boolean blnResult;
+				boolean blnValidTheme = true;
+				while(blnValidTheme == true){
+					//Open text files
+					TextInputFile themes = new TextInputFile("themes.txt");
+					int intNumOfThemes = 0;
+					int intNumOfThemesMinusOne = 0;
 				
-			String strTheme = "";
-			boolean blnResult;
-			boolean blnValidTheme = true;
-			while(blnValidTheme == true){
-				//Open text files
-				TextInputFile themes = new TextInputFile("themes.txt");
-				int intNumOfThemes = 0;
-				int intNumOfThemesMinusOne = 0;
-				
-				//find out number of themes, print themes too
-				while(themes.eof() == false){
-					strTheme = themes.readLine();
-					con.println(strTheme);
-					intNumOfThemes = intNumOfThemes + 1;
-				}
-				themes.close();
-				
-				//read selected theme
-				con.println("Select your theme by typing in the theme name. Please include the '.txt' and ensure no typos.");
-				strTheme = con.readLine();
-				
-				con.clear();
-				
-				con.println("You have selected the "+strTheme+" file for your theme. \nLoading file.");
-				con.sleep(1500);
-				
-				blnResult = blnisValid(strTheme);
-				if(blnResult == true){
-					blnValidTheme = false;
-				}else{
+					//find out number of themes, print themes too
+					while(themes.eof() == false){
+						strTheme = themes.readLine();
+						con.println(strTheme);
+						intNumOfThemes = intNumOfThemes + 1;
+					}
+					themes.close();
+					
+					//read selected theme
+					con.println("Select your theme by typing in the theme name. Please include the '.txt' and ensure no typos.");
+					strTheme = con.readLine();
+					
 					con.clear();
-					con.println("Invalid Theme.");
+					
+					con.println("You have selected the "+strTheme+" file for your theme. \nLoading file.");
 					con.sleep(1500);
-					con.clear();
-				}
-				
-			}
-			TextInputFile selectedTheme = new TextInputFile(strTheme);
-			String strWords;
-			int intNumberOfWords = 0;
-			while(selectedTheme.eof() == false){
-				strWords = selectedTheme.readLine();
-				intNumberOfWords = intNumberOfWords + 1;
-			}
-			System.out.println("There are: "+intNumberOfWords+" words in the "+strTheme+" file");
-			selectedTheme.close();
-			//close and reopen to have array
-			selectedTheme = new TextInputFile(strTheme);
-			
-			//creating 2D array 
-			String strFileWords[][];
-			strFileWords = new String[intNumberOfWords][2];
-			
-			//input data into array
-			int intRow;
-			int intRand;
-			System.out.println("Current array strFileWords[][], unsorted");
-			for(intRow = 0; intRow < intNumberOfWords; intRow++){
-				strFileWords[intRow][0] = selectedTheme.readLine();
-				System.out.println(strFileWords[intRow][0]);
-				intRand = (int)(Math.random()*100+1);
-				strFileWords[intRow][1] = intRand + "";
-				System.out.println(strFileWords[intRow][1]);
-			}
-			selectedTheme.close();
-			
-			System.out.println("Sorted in ascending order by random number: ");
-			//Sorting array---------------------------------------------------------------------------------------------------------------------------------
-			int intCount2;
-			int intCount3;
-			String strTempWord;
-			String strTempNum;
-			
-			
-			for(intCount2 = 0; intCount2 < intNumberOfWords-1; intCount2++){
-				for(intCount3 = 0; intCount3 < intNumberOfWords-1; intCount3++){
 					
-					//Convert the random nums to integer and compare
-					if(Integer.parseInt(strFileWords[intCount3][1]) > Integer.parseInt(strFileWords[intCount3+1][1])){
-						//Swap here, swap thing then swap back
-						//Swap name
-						strTempWord = strFileWords[intCount3][0];
-						strFileWords[intCount3][0] = strFileWords[intCount3+1][0];
-						strFileWords[intCount3+1][0] = strTempWord;
+					blnResult = blnisValid(strTheme);
+					if(blnResult == true){
+						blnValidTheme = false;
+					}else{
+						con.clear();
+						con.println("Invalid Theme.");
+						con.sleep(1500);
+						con.clear();
+					}
+				}
+				TextInputFile selectedTheme = new TextInputFile(strTheme);
+				String strWords;
+				int intNumberOfWords = 0;
+				while(selectedTheme.eof() == false){
+					strWords = selectedTheme.readLine();
+					intNumberOfWords = intNumberOfWords + 1;
+				}
+				System.out.println("There are: "+intNumberOfWords+" words in the "+strTheme+" file");
+				selectedTheme.close();
+				//close and reopen to have array
+				selectedTheme = new TextInputFile(strTheme);
+				
+				//creating 2D array 
+				String strFileWords[][];
+				strFileWords = new String[intNumberOfWords][2];
+				
+				//input data into array
+				int intRow;
+				int intRand;
+				System.out.println("Current array strFileWords[][], unsorted");
+				for(intRow = 0; intRow < intNumberOfWords; intRow++){
+					strFileWords[intRow][0] = selectedTheme.readLine();
+					System.out.println(strFileWords[intRow][0]);
+					intRand = (int)(Math.random()*100+1);
+					strFileWords[intRow][1] = intRand + "";
+					System.out.println(strFileWords[intRow][1]);
+				}
+				selectedTheme.close();
+				
+				System.out.println("Sorted in ascending order by random number: ");
+				//Sorting array--------------------------------------------------------------------------------------------
+				int intCount2;
+				int intCount3;
+				String strTempWord;
+				String strTempNum;
+				
+				
+				for(intCount2 = 0; intCount2 < intNumberOfWords-1; intCount2++){
+					for(intCount3 = 0; intCount3 < intNumberOfWords-1; intCount3++){
 						
-						//Swap random numbers
-						strTempNum = strFileWords[intCount3][1];
-						strFileWords[intCount3][1] = strFileWords[intCount3+1][1];
-						strFileWords[intCount3+1][1] = strTempNum;
-						
+						//Convert the random nums to integer and compare
+						if(Integer.parseInt(strFileWords[intCount3][1]) > Integer.parseInt(strFileWords[intCount3+1][1])){
+							//Swap here, swap thing then swap back
+							//Swap name
+							strTempWord = strFileWords[intCount3][0];
+							strFileWords[intCount3][0] = strFileWords[intCount3+1][0];
+							strFileWords[intCount3+1][0] = strTempWord;
+							
+							//Swap random numbers
+							strTempNum = strFileWords[intCount3][1];
+							strFileWords[intCount3][1] = strFileWords[intCount3+1][1];
+							strFileWords[intCount3+1][1] = strTempNum;
+						}
 					}
-					
 				}
-			}
-			for(intCount3 = 0; intCount3 < intNumberOfWords; intCount3++){
-				System.out.println(strFileWords[intCount3][0] + "-" + strFileWords[intCount3][1]);
-			}
-			//-------------------------------------------------------------------------------------------------------------------------------
-			
-			int intWait;
-			
-			con.sleep(100);
-			con.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLoading...");
-			con.sleep(600);
-			con.println();
-			for(intWait = 0; intWait < 120; intWait++){
-				con.sleep(20);
-				con.print("|");
-			}
-			con.sleep(1000);
-			con.clear();
-			con.println("Complete!");
-			con.sleep(1000);
-			con.clear();
-			
-			//Game
-			
-			//Animation for loading while instructions
-			for(intWait = 0; intWait < 2; intWait++){
-				con.println("Starting game. \n\nInstructions: \nEach word will have a certain number of letters.\nYou may NOT guess more than one letter at a time. \nTry to guess the word before you run out of points!");
-				con.sleep(450);
+				for(intCount3 = 0; intCount3 < intNumberOfWords; intCount3++){
+					System.out.println(strFileWords[intCount3][0] + "-" + strFileWords[intCount3][1]);
+				}
+				//---------------------------------------------------------------------------------------------------------
+				
+				//Loading animation
+				int intWait;
+				
+				con.sleep(100);
+				con.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLoading...");
+				con.sleep(600);
+				con.println();
+				for(intWait = 0; intWait < 120; intWait++){
+					con.sleep(20);
+					con.print("|");
+				}
+				con.sleep(1000);
 				con.clear();
-				con.println("Starting game.. \n\nInstructions: \nEach word will have a certain number of letters.\nYou may NOT guess more than one letter at a time. \nTry to guess the word before you run out of points!");
-				con.sleep(450);
+				con.println("Complete!");
+				con.sleep(1000);
 				con.clear();
-				con.println("Starting game... \n\nInstructions: \nEach word will have a certain number of letters.\nYou may NOT guess more than one letter at a time. \nTry to guess the word before you run out of points!");
-				con.sleep(450);
-				con.clear();
-				con.println("Starting game \n\nInstructions: \nEach word will have a certain number of letters.\nYou may NOT guess more than one letter at a time. \nTry to guess the word before you run out of points!");
-				con.sleep(450);
-				con.clear();
-			}
-			con.clear();
-			
-			
-			int intFile1 = -1;
-			
-			
-			boolean blnRestart = true;
-			//Restarting gameplay
-			while(blnRestart == true){
-				if(intFile1 <= intNumberOfWords-2){
-					intFile1 = intFile1+1;
-					System.out.println("Number of words: "+intNumberOfWords);
-					System.out.println("Word you are on: "+intFile1);
-				}else{
-					con.println("You finished all the words in this theme! Would you like to return to: \n1. Menu\n2. Select Theme");
-					intFinishedTheme = con.readInt();
+				
+				//Game
+				
+				//Animation for loading while instructions
+				for(intWait = 0; intWait < 3; intWait++){
+					con.println("Starting game. \n\nInstructions: \nEach word will have a certain number of letters.\nYou may NOT guess more than one letter at a time. \nTry to guess the word before you run out of points!");
+					con.sleep(450);
 					con.clear();
-					if(intFinishedTheme == 2){
-						blnFinishedTheme = true;
-						break;
-					}break;
-				}
-				
-				String strWord = strFileWords[intFile1][0];
-				String strGuess;
-				int intCount;
-				int intLength = strWord.length();
-				int intPoints = intLength;
-				
-				//Cheat statitan gives 10 extra tries/points
-				if(strName.equalsIgnoreCase("statitan")){
-					intPoints = intPoints + 10;
-				}
-				
-				int intWinCount = 0;
-				
-			
-				//Create one array for the word
-				String strWordArray[];
-				strWordArray = new String[intLength];
-				
-				//Create one array for the guessed letters
-				String strGuessed[];
-				strGuessed = new String[intLength];
-				
-				//input the letters of the word into columns of an array
-				for(intCount = 1; intCount <= intLength; intCount++){
-					strWordArray[intCount-1] = strWord.substring(intCount-1, intCount);	
-				}
-				
-				//Gameplay
-				while(intPoints > 0){
-					
-					//Printing the underscores: Check if previous letters were guessed
-					for(intCount = 0; intCount < intLength; intCount++){
-						if(strGuessed[intCount] != null){
-							System.out.println("This letter was guessed");
-							con.print(strGuessed[intCount]);
-						}else{
-							con.print("_");
-						}
-					}
-					
-					//Ask for a guess
-					con.println("\nYou have: "+intPoints+" points remaining.\nGuess a letter. ");
-					strGuess = con.readLine();
-					
-					
-					//Check if any letter matches the wordArray, then store the data in the spot
-					int intWasThatGuessCorrect = 0;
-					for(intCount = 0; intCount < intLength; intCount++){
-						if(strGuess.equals(strWordArray[intCount])){
-							System.out.print(strGuess);
-							strGuessed[intCount] = strGuess;
-							intWasThatGuessCorrect = 1;
-						}else{
-							System.out.print("_");
-						}
-					}
-					
-					//Check if that was a correct guess or not
+					con.println("Starting game.. \n\nInstructions: \nEach word will have a certain number of letters.\nYou may NOT guess more than one letter at a time. \nTry to guess the word before you run out of points!");
+					con.sleep(450);
 					con.clear();
-					if(intWasThatGuessCorrect == 0){
-						System.out.println("That was a wrong guess.");
-						con.println("WRONG! -1 point.");
-						intPoints = intPoints - 1;
-					}else if(intWasThatGuessCorrect == 1){
-						con.println("CORRECT! Keep guessing.");
-						System.out.println("That was an AWESOME guess.");
-					}
-					
-					//Check if player won
-					int intWinning = 0;
-					for(intCount = 0; intCount < intLength; intCount++){
-						if(strWordArray[intCount].equals(strGuessed[intCount])){
-							System.out.print("g");
-							intWinning += 1;
-						}else{
-							System.out.print("b");
+					con.println("Starting game... \n\nInstructions: \nEach word will have a certain number of letters.\nYou may NOT guess more than one letter at a time. \nTry to guess the word before you run out of points!");
+					con.sleep(450);
+					con.clear();
+					con.println("Starting game \n\nInstructions: \nEach word will have a certain number of letters.\nYou may NOT guess more than one letter at a time. \nTry to guess the word before you run out of points!");
+					con.sleep(450);
+					con.clear();
+				}
+				con.clear();
+				
+				int intFile1 = -1;
+				
+				boolean blnRestart = true;
+				//Restarting gameplay
+				while(blnRestart == true){
+					if(intFile1 <= intNumberOfWords-2){
+						intFile1 = intFile1+1;
+						System.out.println("Number of words: "+intNumberOfWords);
+						System.out.println("Word you are on: "+intFile1);
+					}else{
+						con.println("You finished all the words in this theme! Would you like to return to: \n1. Menu\n2. Select Theme");
+						intFinishedTheme = con.readInt();
+						con.clear();
+						if(intFinishedTheme == 2){
+							blnFinishedTheme = true;
+							break;
 						}
-					}
-					
-					//If the amount of letters correct is equal to the word length, win
-					if(intWinning == intLength){
-						intWinCount = intWinning;
 						break;
 					}
 					
-				}
-				//Win || lose 
-				String strAnswer = "";
-				if(intWinCount == intLength){
-					con.clear();
-					con.println("You Win!");
-					con.println("You gained: "+intPoints+" points. Added to leaderboard.");
+					String strWord = strFileWords[intFile1][0];
+					String strGuess;
+					int intCount;
+					int intLength = strWord.length();
+					int intPoints = intLength;
 					
-					TextOutputFile leaderboard = new TextOutputFile("leaderboard.txt", true);
-					leaderboard.println(strName);
-					
-					leaderboard.println(intPoints);
-					leaderboard.close();
-					
-					con.println("Play Again? Please type YES or NO.");
-					strAnswer = con.readLine();
-				}else if(intWinCount != intLength){
-					con.clear();
-					con.println("You Lose!");
-					con.println("The word was: ");
-					
-					for(intCount = 0; intCount < intLength; intCount++){
-						con.print(strWordArray[intCount]);
+					//Cheat statitan gives 10 extra tries/points
+					if(strName.equalsIgnoreCase("statitan")){
+						intPoints = intPoints + 10;
 					}
 					
-					con.println("\nYou have: "+intPoints+" points.");
-					con.println("Play Again? Please type YES or NO.");
-					strAnswer = con.readLine();
-				}
+					int intWinCount = 0;
 				
-				if(strAnswer.equalsIgnoreCase("yes")){
-					blnRestart = true;
-					con.clear();
-				}else{
-					blnRestart = false;
-					con.clear();
-					con.println("Would you like to quit the application? YES or NO");
-					strAnswer = con.readLine();
-					con.clear();
+					//Create one array for the word
+					String strWordArray[];
+					strWordArray = new String[intLength];
+					
+					//Create one array for the guessed letters
+					String strGuessed[];
+					strGuessed = new String[intLength];
+					
+					//input the letters of the word into columns of an array
+					for(intCount = 1; intCount <= intLength; intCount++){
+						strWordArray[intCount-1] = strWord.substring(intCount-1, intCount);	
+					}
+					
+					//Gameplay
+					while(intPoints > 0){
+						
+						//Printing the underscores: Check if previous letters were guessed
+						for(intCount = 0; intCount < intLength; intCount++){
+							if(strGuessed[intCount] != null){
+								System.out.println("This letter was guessed");
+								con.print(strGuessed[intCount]);
+							}else{
+								con.print("_");
+							}
+						}
+						
+						//Ask for a guess
+						con.println("\nYou have: "+intPoints+" points remaining.\nGuess a letter. ");
+						strGuess = con.readLine();
+						
+						
+						//Check if any letter matches the wordArray, then store the data in the spot
+						int intWasThatGuessCorrect = 0;
+						for(intCount = 0; intCount < intLength; intCount++){
+							if(strGuess.equals(strWordArray[intCount])){
+								System.out.print(strGuess);
+								strGuessed[intCount] = strGuess;
+								intWasThatGuessCorrect = 1;
+							}else{
+								System.out.print("_");
+							}
+						}
+						
+						//Check if that was a correct guess or not
+						con.clear();
+						if(intWasThatGuessCorrect == 0){
+							System.out.println("That was a wrong guess.");
+							con.println("WRONG! -1 point.");
+							intPoints = intPoints - 1;
+						}else if(intWasThatGuessCorrect == 1){
+							con.println("CORRECT! Keep guessing.");
+							System.out.println("That was an AWESOME guess.");
+						}
+						
+						//Check if player won
+						int intWinning = 0;
+						for(intCount = 0; intCount < intLength; intCount++){
+							if(strWordArray[intCount].equals(strGuessed[intCount])){
+								System.out.print("g");
+								intWinning += 1;
+							}else{
+								System.out.print("b");
+							}
+						}
+						
+						//If the amount of letters correct is equal to the word length, win
+						if(intWinning == intLength){
+							intWinCount = intWinning;
+							break;
+						}
+						
+					}
+					
+					//Win || lose 
+					String strAnswer = "";
+					if(intWinCount == intLength){
+						con.clear();
+						con.println("You Win!");
+						con.println("You gained: "+intPoints+" points. Added to leaderboard.");
+						
+						TextOutputFile leaderboard = new TextOutputFile("leaderboard.txt", true);
+						leaderboard.println(strName);
+						
+						leaderboard.println(intPoints);
+						leaderboard.close();
+						
+						con.println("Play Again? Please type YES or NO.");
+						strAnswer = con.readLine();
+					}else if(intWinCount != intLength){
+						con.clear();
+						con.println("You Lose!");
+						con.println("The word was: ");
+						
+						for(intCount = 0; intCount < intLength; intCount++){
+							con.print(strWordArray[intCount]);
+						}
+						
+						con.println("\nYou have: "+intPoints+" points.");
+						con.println("Play Again? Please type YES or NO.");
+						strAnswer = con.readLine();
+					}
+					
+					//Quit application option if answer is no
 					if(strAnswer.equalsIgnoreCase("yes")){
-						blnReturnToMenu = false;
-						con.closeConsole();
+						blnRestart = true;
+						con.clear();
+					}else{
+						blnRestart = false;
+						con.clear();
+						con.println("Would you like to quit the application? YES or NO");
+						strAnswer = con.readLine();
+						con.clear();
+						if(strAnswer.equalsIgnoreCase("yes")){
+							blnReturnToMenu = false;
+							con.closeConsole();
+						}
 					}
 				}
-			}
-			
 			}
 			//Leaderboard option
 			if(intMenuOption == 2){
@@ -358,6 +358,7 @@ public class CPTMax{
 				int intNumberOfRows = 0;
 				String strReadNames;
 				int intRow = 0;
+				
 				//Use null because null indicates theres nothing to read, if it is not null then keep reading
 				while ((strReadNames = leaderboarder.readLine()) != null) {
 					intNumberOfRows += 1;
@@ -571,9 +572,5 @@ public class CPTMax{
 		themesValidation.close();
 		
 		return blnisValid;
-	}
-
-				
+	}		
 }
-
-
